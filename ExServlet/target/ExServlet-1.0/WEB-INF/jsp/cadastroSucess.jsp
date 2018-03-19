@@ -30,8 +30,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Cadastrar Produto</a></li>
-            <li><a href="${pageContext.request.contextPath}/listarTodosProdutos">Listar Produto</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/CadastrarProd">Cadastrar Produto</a></li>
+            <li><a href="${pageContext.request.contextPath}/ListarProd">Listar Produto</a></li>
           </ul>
         </div>
       </div>

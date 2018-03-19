@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author diogo.felix
  */
-@WebServlet(name = "Rota", urlPatterns = {"/Rota"})
+@WebServlet(name = "Rota", urlPatterns = {"/Rota","/ListarProd","/CadastrarProd","/PaginaInicial"})
 public class Rota extends HttpServlet {
 
     @Override
@@ -32,6 +32,18 @@ public class Rota extends HttpServlet {
         switch(destino){
             case "/Rota":
                 requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cadastrarProduto.jsp");
+                requestDispatcher.forward(request, response);
+            break;
+            case "/ListarProd":
+                requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/listarProduto.jsp");
+                requestDispatcher.forward(request, response);
+            break;
+             case "/CadastrarProd":
+                requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cadastrarProduto.jsp");
+                requestDispatcher.forward(request, response);
+            break;
+            case "/PaginaInicial":
+                requestDispatcher = request.getRequestDispatcher("index.jsp");
                 requestDispatcher.forward(request, response);
             break;
         }
