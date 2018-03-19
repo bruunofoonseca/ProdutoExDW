@@ -50,12 +50,17 @@ public class ProdutoDAO {
             preparedStatement.setFloat(3, produto.getPrecoCompra());
             preparedStatement.setFloat(4, produto.getPrecoVenda());
             preparedStatement.setInt(5, produto.getQuantidade());
-            Timestamp t = new Timestamp(produto.getDtCadastro().getTime());
+            Timestamp t = new Timestamp(produto.getDtCadastro().getTime().getTime());
             preparedStatement.setTimestamp(6, t);
             
             // executa o comando SQL
             preparedStatement.execute();
-        } finally{
+        } 
+        catch (SQLException e) {
+            // imprimir erro tecnico no consile
+            e.printStackTrace();
+        }
+        finally{
             // Se o preparedStatement ainda estiver aberto, realiza fechamento
             if (preparedStatement != null && !preparedStatement.isClosed()){
                 preparedStatement.close();
@@ -94,7 +99,7 @@ public class ProdutoDAO {
             preparedStatement.setFloat(3, produto.getPrecoCompra());
             preparedStatement.setFloat(4, produto.getPrecoVenda());
             preparedStatement.setFloat(5, produto.getQuantidade());
-            Timestamp t = new Timestamp(produto.getDtCadastro().getTime());
+            Timestamp t = new Timestamp(produto.getDtCadastro().getTime().getTime());
             preparedStatement.setTimestamp(6, t);
             preparedStatement.setInt(7, produto.getId());
             
@@ -194,8 +199,8 @@ public class ProdutoDAO {
                 produto.setPrecoCompra(result.getFloat("PRECO_COMPRA"));
                 produto.setPrecoVenda(result.getFloat("PRECO_VENDA"));
                 produto.setQuantidade(result.getInt("QUANTIDADE"));
-                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
-                produto.setDtCadastro(d);
+//                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
+//                produto.setDtCadastro(d);
 
                 //Adiciona a instância na lista
                 listaProdutos.add(produto);
@@ -263,8 +268,8 @@ public class ProdutoDAO {
                 produto.setPrecoCompra(result.getFloat("PRECO_COMPRA"));
                 produto.setPrecoVenda(result.getFloat("PRECO_VENDA"));
                 produto.setQuantidade(result.getInt("QUANTIDADE"));
-                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
-                produto.setDtCadastro(d);
+//                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
+//                produto.setDtCadastro(d);
 
                 //Adiciona a instância na lista
                 listaProdutos.add(produto);
@@ -323,8 +328,8 @@ public class ProdutoDAO {
                 produto.setPrecoCompra(result.getFloat("PRECO_COMPRA"));
                 produto.setPrecoVenda(result.getFloat("PRECO_VENDA"));
                 produto.setQuantidade(result.getInt("QUANTIDADE"));
-                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
-                produto.setDtCadastro(d);
+//                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
+//                produto.setDtCadastro(d);
                 
                 //Retorna o resultado
                 return produto;
