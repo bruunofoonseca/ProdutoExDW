@@ -1,8 +1,8 @@
-br/com/produto/Servlets/Produto.class
-br/com/produto/DAOs/ProdutoDAO.class
-br/com/produto/DAOs/CategoriaDAO.class
-br/com/produto/Utils/Constants.class
-br/com/produto/Models/ProdutoModel.class
-br/com/produto/Servlets/ListarProduto.class
-br/com/produto/Utils/ConexaoDB.class
-br/com/produto/Models/CategoriaModel.class
+br\com\produto\Servlets\Produto.class
+br\com\produto\DAOs\CategoriaDAO.class
+br\com\produto\Models\CategoriaModel.class
+br\com\produto\Servlets\ListarProduto.class
+br\com\produto\Utils\Constants.class
+br\com\produto\DAOs\ProdutoDAO.class
+br\com\produto\Utils\ConexaoDB.class
+br\com\produto\Models\ProdutoModel.class
