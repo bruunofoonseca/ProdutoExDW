@@ -1,15 +1,14 @@
 package br.com.produto.Servlets;
 
+import br.com.produto.DAOs.CategoriaDAO;
 import br.com.produto.DAOs.ProdutoDAO;
+import br.com.produto.Models.CategoriaModel;
 import br.com.produto.Models.ProdutoModel;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,27 +31,30 @@ public class Produto extends HttpServlet {
         
         RequestDispatcher requestDispatcher;
 
-        if(!request.getParameter("idProduto").isEmpty()){
-            int idProduto = Integer.parseInt(request.getParameter("idProduto"));
+        if(!request.getParameter("id").isEmpty()){
+            int idProduto = Integer.parseInt(request.getParameter("id"));
 
             ProdutoModel produto = null;
             try {
                 produto = ProdutoDAO.obter(idProduto);
             } catch(Exception e) {
-//                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, e);
+                System.out.println(e);
             }
 
-            SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
-//            data = dt1.format(produto.getDtFabricacao());
-
-            request.setAttribute("data", data);
             request.setAttribute("produto", produto);
-
-            requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cadastrarProduto.jsp");
-            requestDispatcher.forward(request, response);
         }
-        
-        
+
+        List<CategoriaModel> listaCategorias = null;
+        try {
+            listaCategorias = CategoriaDAO.listar();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+
+        request.setAttribute("categorias", listaCategorias);
+
+        requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cadastrarProduto.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     @Override
@@ -65,18 +67,16 @@ public class Produto extends HttpServlet {
         ProdutoModel produto;
         
         if(request.getParameter("id").isEmpty()){
-//            System.out.println("Vou inserir");
             try{  
                 String nome = request.getParameter("Nome");
                 String descricao = request.getParameter("descricao");
                 float precoCompra = Float.parseFloat(request.getParameter("precoCompra"));
                 float precoVenda = Float.parseFloat(request.getParameter("precoVenda"));
                 int quantidade = Integer.parseInt(request.getParameter("quantidade"));
-
-                Calendar today = Calendar.getInstance();
-                today.add(Calendar.DATE, 1);
-                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-                String formatted = format1.format(today.getTime());
+                int idCat = Integer.parseInt(request.getParameter("categoria"));
+                
+                CategoriaModel categoria = CategoriaDAO.obter(idCat);
+                Date today = new Date();
 
                 produto = new ProdutoModel();
                 produto.setNome(nome);
@@ -84,7 +84,8 @@ public class Produto extends HttpServlet {
                 produto.setPrecoCompra(precoCompra);
                 produto.setPrecoVenda(precoVenda);
                 produto.setQuantidade(quantidade);
-//                produto.setDtCadastro(Calendar.getInstance().setTime((Date)format1.parse(formatted)));
+                produto.setDtCadastro(today);
+                produto.setCategorias(categoria);
 
                 ProdutoDAO.inserir(produto);
                 requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cadastroSucess.jsp");
@@ -100,27 +101,30 @@ public class Produto extends HttpServlet {
             } catch (Exception ex) {
 //                Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-//            System.out.println("Vou atualizar");
+        } else {
             SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
             
             try{
                 String nome = request.getParameter("Nome");
-                String fabricante = request.getParameter("Fabricante");
-                String tipoProduto = request.getParameter("TipoProduto");
-                int qtdProduto = Integer.parseInt(request.getParameter("qtdProduto"));
-                float valorProduto = Float.parseFloat(request.getParameter("valor"));
-                String dtFabricacao;
-                if(!request.getParameter("dtFabricacao").isEmpty()){
-                    dtFabricacao = request.getParameter("dtFabricacao");
-                } else {
-                    dtFabricacao = data;
-                }
-                int garantia = Integer.parseInt(request.getParameter("garantia"));
+                String descricao = request.getParameter("descricao");
+                float precoCompra = Float.parseFloat(request.getParameter("precoCompra"));
+                float precoVenda = Float.parseFloat(request.getParameter("precoVenda"));
+                int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+                int idCat = Integer.parseInt(request.getParameter("categoria"));
+                
+                CategoriaModel categoria = CategoriaDAO.obter(idCat);
+                Date today = new Date();
 
                 produto = new ProdutoModel();
 
-                produto.setId(Integer.parseInt(request.getParameter("idProd")));
+                produto.setId(Integer.parseInt(request.getParameter("id")));
+                produto.setNome(nome);
+                produto.setDescricao(descricao);
+                produto.setPrecoCompra(precoCompra);
+                produto.setPrecoVenda(precoVenda);
+                produto.setQuantidade(quantidade);
+                produto.setDtCadastro(today);
+                produto.setCategorias(categoria);
 
                 ProdutoDAO.atualizar(produto);
 

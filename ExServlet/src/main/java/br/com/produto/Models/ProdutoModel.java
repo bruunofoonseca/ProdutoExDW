@@ -5,7 +5,8 @@
  */
 package br.com.produto.Models;
 
-import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,16 @@ public class ProdutoModel {
     private float precoCompra;
     private float precoVenda;
     private int quantidade;
-    private Calendar dtCadastro;
+    private Date dtCadastro;
+    private CategoriaModel categorias;
+
+    public CategoriaModel getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(CategoriaModel categorias) {
+        this.categorias = categorias;
+    }
 
     public int getId() {
         return id;
@@ -70,12 +80,11 @@ public class ProdutoModel {
         this.quantidade = quantidade;
     }
 
-    public Calendar getDtCadastro() {
+    public Date getDtCadastro() {
         return dtCadastro;
     }
 
-    // Atributos
-    public void setDtCadastro(Calendar dtCadastro) {
+    public void setDtCadastro(Date dtCadastro) {
         this.dtCadastro = dtCadastro;
     }
 }

@@ -36,8 +36,7 @@ public class ListarProduto extends HttpServlet {
         ProdutoDAO daoProduto = new ProdutoDAO();
         List<ProdutoModel> produtos;
         ProdutoModel produto;
-        
-            // direciono a url chamada para a classe correta
+
             switch(destino){
 //                case "/exibirProduto":
 //                     System.out.println("entrei exibir Produto");
@@ -64,25 +63,7 @@ public class ListarProduto extends HttpServlet {
 //                break;   
                 case "/listarTodosProdutos":
                     
-                    try {
-
-                        produtos = ProdutoDAO.listar();
-                         
-                        if(produtos != null){
-                            request.setAttribute("pesquisa", produtos);
-                            
-                        }else{
-                            request.setAttribute("msgErroBusca", "Sua busca no gerou resultado");
-                            
-                        }
-                        
-                        request.getRequestDispatcher("/WEB-INF/jsp/listarProduto.jsp").forward(request, response);
-                        
-                    } catch(SQLException | ServletException | IOException e){
-                        System.out.println("Erro -> " + e);
-                    } catch (Exception ex) {
-//                        Logger.getLogger(Produto.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    
                 break;  
                     }
         
@@ -92,7 +73,27 @@ public class ListarProduto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RequestDispatcher requestDispatcher;
+
+        List<ProdutoModel> produtos;
+        ProdutoModel produto;
+
+        try {
+            produtos = ProdutoDAO.listar();
+                         
+            if(produtos != null){
+                request.setAttribute("pesquisa", produtos);
+            } else {
+                request.setAttribute("msgErroBusca", "Sua busca no gerou resultado");
+            }
+                        
+            request.getRequestDispatcher("/WEB-INF/jsp/listarProduto.jsp").forward(request, response);
+                        
+        } catch(SQLException | ServletException | IOException e){
+            System.out.println("Erro -> " + e);
+        } catch (Exception ex) {
+//                        Logger.getLogger(Produto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.List;
 public class ProdutoDAO {
     // insere um produto na tabela produto
     public static void inserir(ProdutoModel produto)
-            throws SQLException, ClassNotFoundException{
+            throws SQLException, ClassNotFoundException, Exception{
         
         // construindo a strin de inserção no BD na tabela produto
         String sql = "INSERT INTO produto (NOME, DESCRICAO, PRECO_COMPRA, "
@@ -42,7 +42,8 @@ public class ProdutoDAO {
             connection = ConexaoDB.getConnection();
 
             // criar um preparedStatement para execução de instruções SQL
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sql, 
+                    PreparedStatement.RETURN_GENERATED_KEYS);
 
             // configura os parametros do preparedStatement
             preparedStatement.setString(1, produto.getNome());
@@ -50,8 +51,16 @@ public class ProdutoDAO {
             preparedStatement.setFloat(3, produto.getPrecoCompra());
             preparedStatement.setFloat(4, produto.getPrecoVenda());
             preparedStatement.setInt(5, produto.getQuantidade());
-            Timestamp t = new Timestamp(produto.getDtCadastro().getTime().getTime());
+            Timestamp t = new Timestamp(produto.getDtCadastro().getTime());
             preparedStatement.setTimestamp(6, t);
+            
+            if(produto.getCategorias() != null) {
+                preparedStatement.getGeneratedKeys().next();
+            
+                int id = preparedStatement.getGeneratedKeys().getInt(1);
+
+                inserirCategoriaProduto(id, produto.getCategorias().getId());
+            }
             
             // executa o comando SQL
             preparedStatement.execute();
@@ -67,6 +76,48 @@ public class ProdutoDAO {
             }
             if (connection != null && !connection.isClosed()){
                 connection.close();
+            }
+        }
+    }
+    
+    private static void inserirCategoriaProduto(int idProd, int idCat)
+            throws SQLException, Exception {
+        
+        String sql = "INSERT INTO PRODUTO_CATEGORIA (ID_PRODUTO, ID_CATEGORIA) "
+                + "VALUES (?, ?)";
+        
+        //Conexão para abertura e fechamento
+        Connection connection2 = null;
+
+        //Statement para obtenção através da conexão, execução de
+        //comandos SQL e fechamentos
+        PreparedStatement preparedStatement2 = null;
+        try {
+            //Abre uma conexão com o banco de dados
+            connection2 = ConexaoDB.getConnection();
+
+            //Cria um statement para execução de instruções SQL
+            preparedStatement2 = connection2.prepareStatement(sql);
+
+            //Configura os parâmetros do "PreparedStatement"
+            preparedStatement2.setInt(1, idProd);
+            preparedStatement2.setInt(2, idCat);
+
+            
+            //Executa o comando no banco de dados
+            preparedStatement2.execute();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            //Se o statement ainda estiver aberto, realiza seu fechamento
+            if (preparedStatement2 != null && !preparedStatement2.isClosed()) {
+                preparedStatement2.close();
+            }
+            //Se a conexão ainda estiver aberta, realiza seu fechamento
+            if (connection2 != null && !connection2.isClosed()) {
+                connection2.close();
             }
         }
     }
@@ -99,7 +150,7 @@ public class ProdutoDAO {
             preparedStatement.setFloat(3, produto.getPrecoCompra());
             preparedStatement.setFloat(4, produto.getPrecoVenda());
             preparedStatement.setFloat(5, produto.getQuantidade());
-            Timestamp t = new Timestamp(produto.getDtCadastro().getTime().getTime());
+            Timestamp t = new Timestamp(produto.getDtCadastro().getTime());
             preparedStatement.setTimestamp(6, t);
             preparedStatement.setInt(7, produto.getId());
             
@@ -199,8 +250,8 @@ public class ProdutoDAO {
                 produto.setPrecoCompra(result.getFloat("PRECO_COMPRA"));
                 produto.setPrecoVenda(result.getFloat("PRECO_VENDA"));
                 produto.setQuantidade(result.getInt("QUANTIDADE"));
-//                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
-//                produto.setDtCadastro(d);
+                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
+                produto.setDtCadastro(d);
 
                 //Adiciona a instância na lista
                 listaProdutos.add(produto);
@@ -268,8 +319,8 @@ public class ProdutoDAO {
                 produto.setPrecoCompra(result.getFloat("PRECO_COMPRA"));
                 produto.setPrecoVenda(result.getFloat("PRECO_VENDA"));
                 produto.setQuantidade(result.getInt("QUANTIDADE"));
-//                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
-//                produto.setDtCadastro(d);
+                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
+                produto.setDtCadastro(d);
 
                 //Adiciona a instância na lista
                 listaProdutos.add(produto);
@@ -328,8 +379,8 @@ public class ProdutoDAO {
                 produto.setPrecoCompra(result.getFloat("PRECO_COMPRA"));
                 produto.setPrecoVenda(result.getFloat("PRECO_VENDA"));
                 produto.setQuantidade(result.getInt("QUANTIDADE"));
-//                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
-//                produto.setDtCadastro(d);
+                Date d = new Date(result.getTimestamp("DT_CADASTRO").getTime());
+                produto.setDtCadastro(d);
                 
                 //Retorna o resultado
                 return produto;

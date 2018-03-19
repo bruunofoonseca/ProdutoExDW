@@ -68,7 +68,7 @@
                   <input id="precoCompra" value="${produto.getPrecoCompra()}" name="precoCompra" class="form-control input-md" required="" type="number" placeholder="R$ 0,00">
               </div>
             </div>
-        
+
             <div class="form-group">
               <label class="col-md-2 control-label" for="precoVenda">Preço de Venda<h11>*</h11></label>  
               <div class="col-md-2">
@@ -82,7 +82,19 @@
                   <input id="quantidade" name="quantidade" class="form-control input-md" type="text" value="${produto.getQuantidade()}">
               </div>
             </div>
-              
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="categoria">Categoria</label>
+                <div class="col-md-2">
+                    <select required id="categoria" name="categoria" class="form-control">
+                        <option value=""></option>
+                        <c:forEach items="${categorias}" var="categoria">
+                            <option value="${categoria.getId()}" ${categoria.getId() == produto.getCategorias().getId() ? 'selected="selected"' : ''}>${categoria.getNome()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group">
               <label class="col-md-2 control-label" for="Cadastrar"></label>
               <div class="col-md-8">
@@ -94,7 +106,7 @@
         </div> 
         </fieldset>
     </form>        
-       
+
     </main>
     </body>
 </html>
