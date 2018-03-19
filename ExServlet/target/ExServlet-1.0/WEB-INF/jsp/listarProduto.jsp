@@ -19,6 +19,24 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <nav class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle format-button-navbar" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar format-icons-button-navbar"></span>
+            <span class="icon-bar format-icons-button-navbar"></span>
+            <span class="icon-bar format-icons-button-navbar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#">Livraia Astec</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Cadastrar Produto</a></li>
+            <li><a href="${pageContext.request.contextPath}/listarTodosProdutos">Listar Produto</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 <!--        <nav class="navbar navbar-default" style="margin-bottom:2px; ">
             <div class="container-fluid">
                 <div class="navbar-header">
