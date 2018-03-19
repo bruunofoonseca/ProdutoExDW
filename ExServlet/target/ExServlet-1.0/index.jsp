@@ -22,7 +22,7 @@
           <div class="panel panel-default">
             <div class="panel-heading"><h3 class="panel-title"><strong>Livraria Astec</strong></h3></div>
              <div class="panel-body ">
-             <form role="form" method="GET" action="Rota">
+             <form role="form" method="GET" action="${pageContext.request.contextPath}/listarTodosProdutos">
               <button type="submit" class="btn btn-success">Entrar</button>
             </form>
             </div>

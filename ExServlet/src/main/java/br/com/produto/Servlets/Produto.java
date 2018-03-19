@@ -31,17 +31,19 @@ public class Produto extends HttpServlet {
         
         RequestDispatcher requestDispatcher;
 
-        if(!request.getParameter("id").isEmpty()){
-            int idProduto = Integer.parseInt(request.getParameter("id"));
+        if (request.getParameterMap().containsKey("id")) {
+            if(!request.getParameter("id").isEmpty()){
+                int idProduto = Integer.parseInt(request.getParameter("id"));
 
-            ProdutoModel produto = null;
-            try {
-                produto = ProdutoDAO.obter(idProduto);
-            } catch(Exception e) {
-                System.out.println(e);
+                ProdutoModel produto = null;
+                try {
+                    produto = ProdutoDAO.obter(idProduto);
+                } catch(Exception e) {
+                    System.out.println(e);
+                }
+
+                request.setAttribute("produto", produto);
             }
-
-            request.setAttribute("produto", produto);
         }
 
         List<CategoriaModel> listaCategorias = null;

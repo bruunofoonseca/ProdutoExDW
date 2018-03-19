@@ -53,17 +53,16 @@ public class ProdutoDAO {
             preparedStatement.setInt(5, produto.getQuantidade());
             Timestamp t = new Timestamp(produto.getDtCadastro().getTime());
             preparedStatement.setTimestamp(6, t);
-            
-            if(produto.getCategorias() != null) {
-                preparedStatement.getGeneratedKeys().next();
-            
-                int id = preparedStatement.getGeneratedKeys().getInt(1);
 
-                inserirCategoriaProduto(id, produto.getCategorias().getId());
-            }
-            
             // executa o comando SQL
             preparedStatement.execute();
+
+//            preparedStatement.getGeneratedKeys().next();
+//
+//            int id = preparedStatement.getGeneratedKeys().getInt(1);
+//
+//            inserirCategoriaProduto(id, produto.getCategorias().getId());
+
         } 
         catch (SQLException e) {
             // imprimir erro tecnico no consile
