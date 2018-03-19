@@ -1,4 +1,5 @@
 br\com\produto\Servlets\Produto.class
+br\com\produto\Servlets\Rota.class
 br\com\produto\DAOs\CategoriaDAO.class
 br\com\produto\Models\CategoriaModel.class
 br\com\produto\Servlets\ListarProduto.class

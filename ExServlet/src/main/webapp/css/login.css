@@ -10,4 +10,12 @@ and open the template in the editor.
 
 .format-login{
     top: 200px;
+    width: 50%;
+    margin-left: 24%;
+    margin-right: 24%;
+}
+
+.format-cx-logo{
+    padding-left: 50px;
+    padding-right: 50px;
 }
